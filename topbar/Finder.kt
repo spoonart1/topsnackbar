@@ -1,5 +1,3 @@
-package com.siab.mobile.base.artbase.utility
-
 import android.app.Activity
 import android.app.Dialog
 import android.support.annotation.IdRes
