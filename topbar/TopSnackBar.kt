@@ -1,5 +1,3 @@
-package com.siab.mobile.view.topbar
-
 import android.app.Activity
 import android.os.Handler
 import android.view.View
@@ -7,8 +5,6 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.TextView
-import com.siab.mobile.R
-import com.siab.mobile.base.artbase.utility.Finder
 
 /**
  * Created by Lafran on 11/9/17.
@@ -75,6 +71,20 @@ class TopSnackBar(activity: Activity, text: String, subtext: String, clickOnDism
         else{
             showBurst()
         }
+    }
+
+    fun update() : TopSnackBar{
+        initContent()
+        return this
+    }
+
+    fun dismis(delay:Long){
+        val handler = Handler()
+        handler.postDelayed(object : Runnable {
+            override fun run() {
+                animateHide()
+            }
+        }, delay)
     }
 
     private fun showOnShot(){
