@@ -9,15 +9,19 @@ import android.widget.TextView
 /**
  * Created by Lafran on 11/9/17.
  */
-class TopSnackBar(activity: Activity, text: String, subtext: String, clickOnDismiss: Boolean = false) {
+class TopSnackBar(activity: Activity, text: String, subtext: String, clickOnDismiss: Boolean = false, autoShow:Boolean = true) {
+
     val DELAYED_ANIMATION_TO_DISMISS = 1500L
     private var viewGroup: ViewGroup? = null
     private var context = activity
     private var text = text
     private var subText = subtext
     private var clickOnDismiss = clickOnDismiss
+    private var defaultBackgroundColorRes = R.color.colorAccent
 
     companion object {
+        val ALERT_COLOR = Color.parseColor("#E74C3C")
+
         var isShowing = false
         var isOneShotEnabled = true
         private var contentView: View? = null
@@ -25,7 +29,8 @@ class TopSnackBar(activity: Activity, text: String, subtext: String, clickOnDism
 
     init {
         setup()
-        show()
+        if(autoShow)
+            show()
     }
 
     private fun setup() {
@@ -49,6 +54,7 @@ class TopSnackBar(activity: Activity, text: String, subtext: String, clickOnDism
             contentView!!.layoutParams = params
         }
 
+        backgroundColorRes(defaultBackgroundColorRes)
         val snackTitle = Finder.findById<TextView>(contentView!!, R.id.tv_snack_title)
         val snackSubTitle = Finder.findById<TextView>(contentView!!, R.id.tv_snack_subtitle)
 
@@ -62,6 +68,21 @@ class TopSnackBar(activity: Activity, text: String, subtext: String, clickOnDism
                 animateHide()
             }
         }
+    }
+
+    fun background(color:Int) : TopSnackBar{
+        contentView?.setBackgroundColor(color)
+        return this
+    }
+
+    fun background(color:String) : TopSnackBar{
+        contentView?.setBackgroundColor(Color.parseColor(color))
+        return this
+    }
+
+    fun backgroundColorRes(colorRes:Int) : TopSnackBar{
+        contentView?.setBackgroundColor(ContextCompat.getColor(context, colorRes))
+        return this
     }
 
     fun show() {
